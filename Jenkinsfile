@@ -25,7 +25,7 @@ pipeline {
       steps {
         withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
           script {
-            app = docker.build("asecurityguru/testeb")
+            def app = docker.build("asecurityguru/testeb")
           }
         }
       }
@@ -37,7 +37,7 @@ pipeline {
           script {
             try {
               bat("""
-                C:\\snyk\\snyk-win.exe container test asecurityguru/testeb
+                C:\\Users\\jenkinsuser\\AppData\\Roaming\\Snyk\\snyk-win.exe container test asecurityguru/testeb
               """)
             } catch (err) {
               echo err.getMessage()
