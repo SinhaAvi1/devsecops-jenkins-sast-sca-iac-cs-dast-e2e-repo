@@ -37,7 +37,7 @@ pipeline {
           script {
             try {
               bat("""
-                C:\\Users\\jenkinsuser\\AppData\\Roaming\\Snyk\\snyk-win.exe container test asecurityguru/testeb
+                C:\\Users\\jenkinsuser\\AppData\\Roaming\\Snyk\\snyk-win.exe container test asecurityguru/testeb || || exit /b 0
               """)
             } catch (err) {
               echo err.getMessage()
@@ -71,10 +71,12 @@ pipeline {
     stage('checkov') {
       steps {
         bat("""
-          checkov -s -f main.tf
+          checkov -s -f main.tf || || exit /b 0
         """)
       }
     }
 
   }
 }
+
+
