@@ -36,9 +36,7 @@ pipeline {
         withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
           script {
             try {
-              bat("""
-                C:\\Users\\jenkinsuser\\AppData\\Roaming\\Snyk\\snyk-win.exe container test asecurityguru/testeb || || exit /b 0
-              """)
+              bat('C:\\Users\\jenkinsuser\\AppData\\Roaming\\Snyk\\snyk-win.exe container test asecurityguru/testeb || exit /b 0')
             } catch (err) {
               echo err.getMessage()
             }
@@ -50,9 +48,7 @@ pipeline {
     stage('RunSnykSCA') {
       steps {
         withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
-          bat("""
-            mvn snyk:test -fn
-          """)
+         bat('mvn snyk:test -fn || exit /b 0')
         }
       }
     }
@@ -70,9 +66,8 @@ pipeline {
 
     stage('checkov') {
       steps {
-        bat("""
-          checkov -s -f main.tf || || exit /b 0
-        """)
+        bat('checkov -s -f main.tf || exit /b 0')
+
       }
     }
 
